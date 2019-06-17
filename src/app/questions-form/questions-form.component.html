@@ -1,0 +1,33 @@
+<div class="questions-form">
+  <form class="questions-form__fields" [formGroup]="translationsForm"
+    (ngSubmit)="addWord()">
+    <div class="questions-form__native-language">
+      <label><strong>German: </strong><br>
+        <input type="text" required formControlName="native" #nativeWordField>
+      </label>
+      <div *ngIf="submitted && errors.native.errors" class="invalid-feedback">
+        <div *ngIf="errors.foreign.native.required">Native word is required</div>
+      </div>
+    </div>
+    <div class="question-form__foreign-language">
+      <label>
+        <strong>English: </strong><br>
+        <input type="text" required formControlName="foreign">
+      </label>
+
+      <div *ngIf="submitted && errors.foreign.errors" class="invalid-feedback">
+        <div *ngIf="errors.foreign.errors.required">Foreign word is required</div>
+      </div>
+    </div>
+    <button type="submit" *ngIf="shouldAddWord">Add</button>
+
+  </form>
+
+
+  <ul>
+    <li *ngFor="let word of words | keyvalue">
+      {{word.key}} : {{word.value}}
+    </li>
+  </ul>
+
+</div>
