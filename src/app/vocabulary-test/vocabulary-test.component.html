@@ -1,3 +1,9 @@
-<p>
-  vocabulary-test
-</p>
+<form class="form" [formGroup]="answerForm">
+  <legend class="form__legend">
+    Hallo
+  </legend>
+  <label class="form__label">German:<br>
+    <input type="text" class="form__input" required formControlName="answer">
+  </label>
+  <button class="form__button" type="submit">Answer</button>
+</form>
