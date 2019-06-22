@@ -1,33 +1,51 @@
 <div class="questions-form">
-  <form class="questions-form__fields" [formGroup]="translationsForm"
-    (ngSubmit)="addWord()">
-    <div class="questions-form__native-language">
-      <label><strong>German: </strong><br>
-        <input type="text" required formControlName="native" #nativeWordField>
-      </label>
-      <div *ngIf="submitted && errors.native.errors" class="invalid-feedback">
-        <div *ngIf="errors.foreign.native.required">Native word is required</div>
-      </div>
-    </div>
-    <div class="question-form__foreign-language">
-      <label>
-        <strong>English: </strong><br>
-        <input type="text" required formControlName="foreign">
-      </label>
 
-      <div *ngIf="submitted && errors.foreign.errors" class="invalid-feedback">
-        <div *ngIf="errors.foreign.errors.required">Foreign word is required</div>
+  <form class="form" [formGroup]="translationsForm"
+    (ngSubmit)="submitWords()">
+    <legend class="form__legend">
+      {{ isVocabularyComplete ? "Review your vocabulary list" :
+      "Insert 20 words" }}
+    </legend>
+    <div class="questions-form__fields" *ngIf="!isVocabularyComplete; else
+      vocabularyListBlock">
+      <div class="questions-form__field-column">
+        <label class="form__label">German:<br>
+          <input type="text" class="form__input" required
+            formControlName="native" #nativeWordField>
+        </label>
+        <div *ngIf="submitted && errors.native.errors" class="invalid-feedback">
+          <div *ngIf="errors.foreign.native.required">Native word is required</div>
+        </div>
       </div>
-    </div>
-    <button type="submit" *ngIf="shouldAddWord">Add</button>
+      <div class="questions-form__field-column">
+        <label class="form__label">
+          English:
+          <input type="text" class="questions-form__input" required
+            formControlName="foreign">
+        </label>
 
+        <div *ngIf="submitted && errors.foreign.errors"
+          class="invalid-feedback">
+          <div *ngIf="errors.foreign.errors.required">Foreign word is required</div>
+        </div>
+      </div>
+
+    </div>
+
+    <ng-template #vocabularyListBlock>
+
+      <ul>
+        <li *ngFor="let word of words | keyvalue">
+          {{word.key}}: {{word.value}}
+        </li>
+      </ul>
+    </ng-template>
+
+
+    <button class="form__button" type="submit">
+      {{ isVocabularyComplete ? "Start challenge!" : "Add a word" }}</button>
   </form>
 
-
-  <ul>
-    <li *ngFor="let word of words | keyvalue">
-      {{word.key}} : {{word.value}}
-    </li>
-  </ul>
+  <div class="questions-form__counter">{{ wordsCount }} words left</div>
 
 </div>

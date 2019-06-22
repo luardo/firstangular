@@ -4,10 +4,11 @@ import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppComponent} from "./app.component";
 import {QuestionsFormComponent} from "./questions-form/questions-form.component";
+import { VocabularyTestComponent } from './vocabulary-test/vocabulary-test.component';
 
 @NgModule({
   declarations: [
-    AppComponent, QuestionsFormComponent
+    AppComponent, QuestionsFormComponent, VocabularyTestComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule

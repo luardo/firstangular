@@ -1,19 +1,24 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {ElementRef, ViewChild} from "@angular/core";
 
 @Component({selector: "app-questions-form", templateUrl: "./questions-form.component.html", styleUrls: ["./questions-form.component.scss"]})
 export class QuestionsFormComponent implements OnInit {
+  @Output()onVocabularyCompleted: EventEmitter<any> = new EventEmitter();
   @ViewChild("nativeWordField")nativeWordField: ElementRef;
 
   words: Object = {};
-  maxWordCount: Number = 3;
+  maxWordCount: number = 3;
   translationsForm: FormGroup;
   submitted: Boolean = false;
 
-  get shouldAddWord(): boolean {
-    return Object.keys(this.words).length < this.maxWordCount;
+  get isVocabularyComplete(): boolean {
+    return Object.keys(this.words).length >= this.maxWordCount;
+  }
+
+  get wordsCount(): number {
+    return this.maxWordCount - Object.keys(this.words).length;
   }
 
   get errors() {
@@ -31,18 +36,24 @@ export class QuestionsFormComponent implements OnInit {
     });
   }
 
-  addWord() {
+  submitWords(): void {
     this.submitted = true;
+
+    if (this.isVocabularyComplete) {
+      this.onVocabularyCompleted.emit(this.words);
+      return;
+    }
 
     if (this.translationsForm.invalid) {
       return;
     }
+
     this.words[this.translationsForm.controls.native.value] = this.translationsForm.controls.foreign.value;
     this.resetForm();
     this.nativeWordField.nativeElement.focus();
   }
 
-  resetForm() {
+  resetForm(): void {
     this.translationsForm.controls.foreign.setValue("");
     this.translationsForm.controls.native.setValue("");
     this.submitted = false;
