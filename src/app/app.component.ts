@@ -4,13 +4,13 @@ import {Component} from "@angular/core";
 export class AppComponent {
   title = "second-ng";
 
-  public words: Array<object> = [];
+  public vocabularyWords: Array<object> = [];
 
   get isVocabularyReady(): boolean {
-    return Object.keys(this.words).length > 0;
+    return Object.keys(this.vocabularyWords).length > 0;
   }
 
   vocabularyAdded(vocabulary : Array<Object>) {
-    this.words = vocabulary;
+    this.vocabularyWords = vocabulary;
   }
 }

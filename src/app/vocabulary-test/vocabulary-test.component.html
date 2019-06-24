@@ -1,6 +1,6 @@
-<form class="form" [formGroup]="answerForm">
+<form class="form" [formGroup]="answerForm" (ngSubmit)="submitAnswer()">
   <legend class="form__legend">
-    Hallo
+    {{nativeWord}}
   </legend>
   <label class="form__label">German:<br>
     <input type="text" class="form__input" required formControlName="answer">

@@ -3,12 +3,12 @@ import {NgModule} from "@angular/core";
 import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppComponent} from "./app.component";
-import {QuestionsFormComponent} from "./questions-form/questions-form.component";
-import { VocabularyTestComponent } from './vocabulary-test/vocabulary-test.component';
+import {VocabularyFormComponent} from "./vocabulary-form/vocabulary-form.component";
+import {VocabularyTestComponent} from "./vocabulary-test/vocabulary-test.component";
 
 @NgModule({
   declarations: [
-    AppComponent, QuestionsFormComponent, VocabularyTestComponent
+    AppComponent, VocabularyFormComponent, VocabularyTestComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule

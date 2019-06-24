@@ -1,3 +1,4 @@
-<app-questions-form *ngIf="!isVocabularyReady"
-    (onVocabularyCompleted)="vocabularyAdded($event)"></app-questions-form>
-<app-vocabulary-test *ngIf="isVocabularyReady"></app-vocabulary-test>
+<app-vocabulary-form *ngIf="!isVocabularyReady"
+    (onVocabularyCompleted)="vocabularyAdded($event)"></app-vocabulary-form>
+<app-vocabulary-test *ngIf="isVocabularyReady"
+    [vocabularyWords]="vocabularyWords"></app-vocabulary-test>

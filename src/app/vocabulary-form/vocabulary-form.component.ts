@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {ElementRef, ViewChild} from "@angular/core";
 
-@Component({selector: "app-questions-form", templateUrl: "./questions-form.component.html", styleUrls: ["./questions-form.component.scss"]})
-export class QuestionsFormComponent implements OnInit {
+@Component({selector: "app-vocabulary-form", templateUrl: "./vocabulary-form.component.html", styleUrls: ["./vocabulary-form.component.scss"]})
+export class VocabularyFormComponent implements OnInit {
   @Output()onVocabularyCompleted: EventEmitter<any> = new EventEmitter();
-  @ViewChild("nativeWordField")nativeWordField: ElementRef;
+  @ViewChild("nativeWordField", {static: false})
+  nativeWordField: ElementRef;
 
   words: Object = {};
   maxWordCount: number = 3;
