@@ -1,9 +1,11 @@
 <form class="form" [formGroup]="answerForm" (ngSubmit)="submitAnswer()">
   <legend class="form__legend">
-    {{nativeWord}}
+    {{question}}
   </legend>
   <label class="form__label">German:<br>
     <input type="text" class="form__input" required formControlName="answer">
   </label>
   <button class="form__button" type="submit">Answer</button>
+
+  correct: {{correct}}, wrong {{wrong}}
 </form>

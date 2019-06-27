@@ -9,17 +9,17 @@ export class VocabularyFormComponent implements OnInit {
   @ViewChild("nativeWordField", {static: false})
   nativeWordField: ElementRef;
 
-  words: Object = {};
+  vocabularyWords: Array<Object> = [];
   maxWordCount: number = 3;
   translationsForm: FormGroup;
   submitted: Boolean = false;
 
   get isVocabularyComplete(): boolean {
-    return Object.keys(this.words).length >= this.maxWordCount;
+    return this.vocabularyWords.length >= this.maxWordCount;
   }
 
   get wordsCount(): number {
-    return this.maxWordCount - Object.keys(this.words).length;
+    return this.maxWordCount - this.vocabularyWords.length;
   }
 
   get errors() {
@@ -41,7 +41,7 @@ export class VocabularyFormComponent implements OnInit {
     this.submitted = true;
 
     if (this.isVocabularyComplete) {
-      this.onVocabularyCompleted.emit(this.words);
+      this.onVocabularyCompleted.emit(this.vocabularyWords);
       return;
     }
 
@@ -49,7 +49,10 @@ export class VocabularyFormComponent implements OnInit {
       return;
     }
 
-    this.words[this.translationsForm.controls.native.value] = this.translationsForm.controls.foreign.value;
+    this.vocabularyWords.push({
+      [this.translationsForm.controls.native.value]: this.translationsForm.controls.foreign.value
+    });
+
     this.resetForm();
     this.nativeWordField.nativeElement.focus();
   }

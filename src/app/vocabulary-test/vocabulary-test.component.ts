@@ -6,14 +6,23 @@ export class VocabularyTestComponent implements OnInit {
   @Input()vocabularyWords: Array<Object>;
 
   answerForm: FormGroup;
+  submitted: Boolean = false;
   correct: number = 0;
   wrong: number = 0;
+  currentQuestion: Object;
 
   constructor(private formBuilder : FormBuilder, private evaluationService : EvaluationService) {}
 
-  get nativeWord(): string {
-    const nativeWords = Object.keys(this.vocabularyWords);
-    return nativeWords.shift();
+  get question(): string {
+    return Object.keys(this.currentQuestion).shift();
+  }
+
+  get answer(): string {
+    return Object.values(this.currentQuestion).shift();
+  }
+
+  createNextQuestion(): void {
+    this.currentQuestion = this.randomizeArray(this.vocabularyWords).shift();
   }
 
   ngOnInit() {
@@ -21,10 +30,10 @@ export class VocabularyTestComponent implements OnInit {
       answer: ["", Validators.required]
     });
 
-    // this.randomizeArray(this.vocabularyWords);
+    this.createNextQuestion();
   }
 
-  randomizeArray(arr): void {
+  randomizeArray(arr): Array<object> {
     const newArr = arr.slice();
     for (let i = newArr.length - 1; i > 0; i--) {
       const rand = Math.floor(Math.random() * (i + 1));
@@ -34,15 +43,29 @@ export class VocabularyTestComponent implements OnInit {
         newArr[rand], newArr[i]
       ];
     }
-    return (this.vocabularyWords = newArr);
+    return newArr;
   }
 
-  submitAnswer() {
-    const foreignWords = Object.values(this.vocabularyWords);
-    if (foreignWords.shift() === this.answerForm.controls.answer.value) {
+  resetForm(): void {
+    this.answerForm.controls.foreign.setValue("");
+    this.answerForm.controls.native.setValue("");
+    this.submitted = false;
+  }
+
+  submitAnswer(): void {
+    this.submitted = true;
+
+    if (this.answerForm.invalid) {
+      return;
+    }
+
+    if (this.answer === this.answerForm.controls.answer.value) {
       this.correct++;
     } else {
-      this.wrong--;
+      this.wrong++;
     }
+
+    this.resetForm();
+    this.createNextQuestion();
   }
 }
