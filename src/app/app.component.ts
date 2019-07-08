@@ -1,16 +1,20 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
-@Component({selector: "app-root", templateUrl: "./app.component.html", styleUrls: ["./app.component.scss"]})
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"]
+})
 export class AppComponent {
-  title = "second-ng";
+    title = "second-ng";
 
-  public vocabularyWords: Array<object> = [];
+    public vocabularyWords: Array<object> = [];
 
-  get isVocabularyReady(): boolean {
-    return Object.keys(this.vocabularyWords).length > 0;
-  }
+    get isVocabularyReady(): boolean {
+        return Object.keys(this.vocabularyWords).length > 0;
+    }
 
-  vocabularyAdded(vocabulary : Array<Object>) {
-    this.vocabularyWords = vocabulary;
-  }
+    vocabularyAdded(vocabulary: Array<object>) {
+        this.vocabularyWords = vocabulary;
+    }
 }

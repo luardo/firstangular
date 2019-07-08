@@ -1,65 +1,80 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import {
+    FormBuilder,
+    FormGroup,
+    Validators,
+    ReactiveFormsModule
+} from "@angular/forms";
 
-import {ElementRef, ViewChild} from "@angular/core";
+import { ElementRef, ViewChild } from "@angular/core";
 
-@Component({selector: "app-vocabulary-form", templateUrl: "./vocabulary-form.component.html", styleUrls: ["./vocabulary-form.component.scss"]})
+/**
+ * @group Vocabulary
+ * @component VocabularyForm
+ * @description
+ * <div>It's possible use <b>html</b> in the description</div>
+ */
+
+@Component({
+    selector: "app-vocabulary-form",
+    templateUrl: "./vocabulary-form.component.html",
+    styleUrls: ["./vocabulary-form.component.scss"]
+})
 export class VocabularyFormComponent implements OnInit {
-  @Output()onVocabularyCompleted: EventEmitter<any> = new EventEmitter();
-  @ViewChild("nativeWordField", {static: false})
-  nativeWordField: ElementRef;
+    @Output() onVocabularyCompleted: EventEmitter<any> = new EventEmitter();
+    @ViewChild("nativeWordField")
+    nativeWordField: ElementRef;
 
-  vocabularyWords: Array<Object> = [];
-  maxWordCount: number = 3;
-  translationsForm: FormGroup;
-  submitted: Boolean = false;
+    vocabularyWords: Array<object> = [];
+    maxWordCount: number = 3;
+    translationsForm: FormGroup;
+    submitted: boolean = false;
 
-  get isVocabularyComplete(): boolean {
-    return this.vocabularyWords.length >= this.maxWordCount;
-  }
-
-  get wordsCount(): number {
-    return this.maxWordCount - this.vocabularyWords.length;
-  }
-
-  get errors() {
-    return this.translationsForm.controls;
-  }
-
-  constructor(private formBuilder : FormBuilder) {}
-
-  ngOnInit() {
-    this.translationsForm = this.formBuilder.group({
-      foreign: [
-        "", Validators.required
-      ],
-      native: ["", Validators.required]
-    });
-  }
-
-  submitWords(): void {
-    this.submitted = true;
-
-    if (this.isVocabularyComplete) {
-      this.onVocabularyCompleted.emit(this.vocabularyWords);
-      return;
+    get isVocabularyComplete(): boolean {
+        return this.vocabularyWords.length >= this.maxWordCount;
     }
 
-    if (this.translationsForm.invalid) {
-      return;
+    get wordsCount(): number {
+        return this.maxWordCount - this.vocabularyWords.length;
     }
 
-    this.vocabularyWords.push({
-      [this.translationsForm.controls.native.value]: this.translationsForm.controls.foreign.value
-    });
+    get errors() {
+        return this.translationsForm.controls;
+    }
 
-    this.resetForm();
-    this.nativeWordField.nativeElement.focus();
-  }
+    constructor(private formBuilder: FormBuilder) {}
 
-  resetForm(): void {
-    this.translationsForm.controls.foreign.setValue("");
-    this.translationsForm.controls.native.setValue("");
-    this.submitted = false;
-  }
+    ngOnInit() {
+        this.translationsForm = this.formBuilder.group({
+            foreign: ["", Validators.required],
+            native: ["", Validators.required]
+        });
+    }
+
+    submitWords(): void {
+        this.submitted = true;
+
+        if (this.isVocabularyComplete) {
+            this.onVocabularyCompleted.emit(this.vocabularyWords);
+            return;
+        }
+
+        if (this.translationsForm.invalid) {
+            return;
+        }
+
+        this.vocabularyWords.push({
+            [this.translationsForm.controls.native.value]: this.translationsForm
+                .controls.foreign.value
+        });
+
+        this.resetForm();
+        this.nativeWordField.nativeElement.focus();
+    }
+
+    resetForm(): void {
+        this.translationsForm.controls.foreign.setValue("");
+        this.translationsForm.controls.native.setValue("");
+        this.submitted = false;
+    }
 }
