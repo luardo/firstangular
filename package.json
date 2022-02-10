@@ -37,7 +37,7 @@
         "jasmine-spec-reporter": "~4.1.0",
         "karma-cli": "~1.0.1",
         "karma-phantomjs-launcher": "^1.0.4",
-        "node-sass": "^4.5.3",
+        "node-sass": "^7.0.0",
         "protractor": "^5.4.2",
         "ts-node": "^3.3.0",
         "tslint": "^5.10.0",
